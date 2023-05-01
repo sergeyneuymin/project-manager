@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+  <meta charset="ISO-8859-1">
+  <title>Project Manager</title>
+</head>
+<body>
+<div align="center">
+  <h3 th:inline="text">Welcome!</h3>
+
+  <form th:action="@{/logout}" method="post">
+    <input type="submit" value="Logout" />
+  </form>
+
+  <h1>Project Manager</h1>
+  <a href="tasks/new">Create New Task</a>
+
+  <br/><br/>
+  <table border="1" cellpadding="10">
+    <thead>
+    <tr>
+      <th>Title</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Status</th>
+      <th>Created</th>
+      <th>Updated</th>
+
+      <th>Actions</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="task : ${listTasks}">
+      <td th:text="${task.title}">Title</td>
+      <td th:text="${task.taskType}">Type</td>
+      <td th:text="${task.description}">Info</td>
+      <td th:text="${task.status}">Status</td>
+      <td th:text="${task.dateCreated}">Date created</td>
+      <td th:text="${task.dateUpdated}">Date updated</td>
+      <td>
+        <a th:href="@{'tasks/edit/' + ${task.id}}">Edit</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <a th:href="@{'tasks/delete/' + ${task.id}}">Delete</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+</body>
+</html>

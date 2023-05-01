@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+  <meta charset="ISO-8859-1">
+  <title>Project Manager</title>
+</head>
+<body>
+<div align="center">
+  <h3 th:inline="text">Welcome!</h3>
+
+  <form th:action="@{/logout}" method="post">
+    <input type="submit" value="Logout" />
+  </form>
+
+  <h1>Project Manager</h1>
+  <td sec:authorize="hasRole('ROLE_ADMIN')">
+    <a th:href="@{${parentId} + '/new'}">Create New Sub-Project</a>
+  </td>
+  <br/><br/>
+  <table border="1" cellpadding="10">
+    <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Author</th>
+      <th>Actions</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="project : ${listProjects}">
+      <td th:text="${project.title}">Title</td>
+      <td th:text="${project.description}">Description</td>
+      <td th:text="${project.author}">Author</td>
+
+      <td sec:authorize="hasRole('ROLE_ADMIN')">
+        <a th:href="@{${project.id}}">Sub-projects</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <a th:href="@{${project.id} + '/tasks'}">Tasks</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <a th:href="@{'edit/' + ${project.id}}">Edit</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <a th:href="@{'delete/' + ${project.id}}">Delete</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+</body>
+</html>
